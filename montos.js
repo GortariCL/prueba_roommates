@@ -1,38 +1,31 @@
 const fs = require('fs');
 const gastosJSON = JSON.parse(fs.readFileSync('gastos.json', 'UTF8'));
-const roommateJSON = JSON.parse(fs.readFileSync('roommates.json', 'UTF8'));
-const roommates = roommateJSON.roommates;
 const gastos_arr = gastosJSON.gastos;
 
-const calculo = (nombre, total, opcion) => {
-    const div = Number(total / roommates.length).toFixed(2);
-    roommates.forEach((r, i) => {
-        if (opcion == 1) {
-            if (nombre == r.nombre) {
-                r.recibe += parseFloat(div);
-            } else {
-                r.debe -= parseFloat(div);
-            }
-            r.total = r.recibe - r.debe;
-        }
-        else if (opcion == 2) {
-            if (nombre == r.nombre) {
-                r.recibe = parseFloat(div);
-            } else {
-                r.debe += parseFloat(div);
-            }
-            r.total = r.recibe - r.debe;
-        }
-        else if (opcion == 3) {
-            if (nombre == r.nombre) {
-                r.recibe -= parseFloat(div);
-            } else {
-                r.debe += parseFloat(div);
-            }
-            r.total = r.recibe - r.debe;
-        }
+const gastosRoommates = (arrGasto) => {
+    console.log(arrGasto.gastos);
+    const roommateJSON = JSON.parse(fs.readFileSync('roommates.json', 'UTF8'));
+    let roommates = roommateJSON.roommates.map((r) => {
+        r.debe = 0;
+        r.recibe = 0;
+        r.total = 0;
+        return r;
+    });
+
+    arrGasto.gastos.forEach((g, i) => {
+        const div = Number(g.monto / roommates.length).toFixed(2);
+        roommates = roommates.map((r) => {
+                if (g.roommate == r.nombre) {
+                    r.recibe += parseFloat(div);
+                } else {
+                    r.debe -= parseFloat(div);
+                }
+                r.total = r.recibe - r.debe;
+                return r; 
+        });
     });
     fs.writeFileSync('roommates.json', JSON.stringify(roommateJSON));
+    return arrGasto;
 }
 
 const recalcularGastos = (arrRoommie) => {
@@ -57,4 +50,4 @@ const recalcularGastos = (arrRoommie) => {
     return arrRoommie;
 }
 
-module.exports = { calculo, recalcularGastos };
+module.exports = { recalcularGastos, gastosRoommates };

@@ -5,7 +5,7 @@ const moment = require('moment');
 const { v4: uuidv4 } = require('uuid');
 const { newRoommate, saveRoommate, recalculaGastos } = require('./roommate');
 const { gastosRoommate, deleteGasto } = require('./gastos');
-const { calculo } = require('./montos')
+const { gastosRoommates } = require('./montos')
 
 const server =
     http.createServer((req, res) => {
@@ -53,10 +53,9 @@ const server =
                     id: uuidv4().slice(-6)
                 }
                 gastosRoommate(gastos);
-                calculo(body.roommate, body.monto, 1);
                 res.end();
             })
-        }
+        } 
         // peticion: PUT gasto
         if (req.url.startsWith('/gasto') && req.method == 'PUT') {
             const { id } = url.parse(req.url, true).query;
