@@ -73,11 +73,11 @@ const server =
                             fecha: moment().format('lll'),
                             id: g.id,
                         }
-                        calculo(body.roommate, body.monto, 2);
                         return editGasto;
                     }
                     return g;
                 });
+                gastosRoommates(gastosJSON);
                 fs.writeFileSync('gastos.json', JSON.stringify(gastosJSON));
                 res.end();
             })

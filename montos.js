@@ -3,7 +3,6 @@ const gastosJSON = JSON.parse(fs.readFileSync('gastos.json', 'UTF8'));
 const gastos_arr = gastosJSON.gastos;
 
 const gastosRoommates = (arrGasto) => {
-    console.log(arrGasto.gastos);
     const roommateJSON = JSON.parse(fs.readFileSync('roommates.json', 'UTF8'));
     let roommates = roommateJSON.roommates.map((r) => {
         r.debe = 0;
