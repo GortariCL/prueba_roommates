@@ -38,7 +38,7 @@ const server =
             res.setHeader('Content-Type', 'application/json');
             res.end(fs.readFileSync('gastos.json', 'UTF8'));
         }
-        // peticion: POST gasto
+        //peticion: POST gasto
         if (req.url.startsWith('/gasto') && req.method == 'POST') {
             let body;
             req.on('data', (payload) => {
@@ -55,7 +55,7 @@ const server =
                 gastosRoommate(gastos);
                 res.end();
             })
-        } 
+        }
         // peticion: PUT gasto
         if (req.url.startsWith('/gasto') && req.method == 'PUT') {
             const { id } = url.parse(req.url, true).query;
