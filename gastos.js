@@ -11,8 +11,7 @@ const gastosRoommate = (g) => {
     const roommates_arr = roommatesJSON.roommates;
     if (roommates_arr.length > 0) { //Se valida que existan roommates para no crear gastos null
         gastos_arr.push(g);  
-        gastosRoommates(gastosJSON);
-        
+        gastosRoommates(gastosJSON);        
         fs.writeFileSync('gastos.json', JSON.stringify(gastosJSON));
         //Requerimiento 6
         const correos = roommates_arr.map((r) => r.correo);

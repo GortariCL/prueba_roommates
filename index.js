@@ -24,6 +24,7 @@ const server =
                 recalculaGastos();
                 res.end(JSON.stringify(roommate));
             }).catch(e => {
+                //Requerimiento 5
                 res.statusCode = 500;
                 res.end();
                 console.log('Error en el registro de nuevo roommate!', e);
