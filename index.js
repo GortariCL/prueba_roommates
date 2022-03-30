@@ -5,12 +5,13 @@ const moment = require('moment');
 const { v4: uuidv4 } = require('uuid');
 const { newRoommate, saveRoommate, recalculaGastos } = require('./roommate');
 const { gastosRoommate, deleteGasto } = require('./gastos');
-const { gastosRoommates } = require('./montos')
+const { gastosRoommates } = require('./montos');
 
 const server =
     http.createServer((req, res) => {
         const gastosJSON = JSON.parse(fs.readFileSync('gastos.json', 'UTF8'));
         const gastos_arr = gastosJSON.gastos;
+
         //peticion: GET
         if (req.url === '/' && req.method == 'GET') {
             res.setHeader('Content-Type', 'text/html');
@@ -53,8 +54,8 @@ const server =
                     id: uuidv4().slice(-6)
                 }
                 gastosRoommate(gastos);
-                res.end();
-            })
+                res.end();                
+            });
         }
         // peticion: PUT gasto
         if (req.url.startsWith('/gasto') && req.method == 'PUT') {
@@ -77,8 +78,8 @@ const server =
                     }
                     return g;
                 });
-                gastosRoommates(gastosJSON);
                 fs.writeFileSync('gastos.json', JSON.stringify(gastosJSON));
+                gastosRoommates(gastosJSON);
                 res.end();
             })
         }

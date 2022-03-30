@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
-const { recalcularGastos } = require('./montos');
+const { gastosRoommates } = require('./montos');
 
 //Consulta a la API externa
 const newRoommate = async () => {
@@ -29,9 +29,9 @@ const saveRoommate = (user) => {
 }
 
 const recalculaGastos = () => {
-    const roommatesJSON = JSON.parse(fs.readFileSync('roommates.json', 'UTF8'));
-    const resultado = recalcularGastos(roommatesJSON);
-    fs.writeFileSync('roommates.json', JSON.stringify(resultado));
+    const gastosJSON = JSON.parse(fs.readFileSync('gastos.json', 'UTF8'));
+    const gastos = gastosRoommates(gastosJSON);
+    fs.writeFileSync('gastos.json', JSON.stringify(gastos));
 }
 
 module.exports = { newRoommate, saveRoommate, recalculaGastos };
