@@ -22,6 +22,7 @@ const server =
             newRoommate().then(async (roommate) => {
                 saveRoommate(roommate);
                 recalculaGastos();
+                res.statusCode =200;
                 res.end(JSON.stringify(roommate));
             }).catch(e => {
                 //Requerimiento 5
@@ -33,6 +34,7 @@ const server =
         //peticion: GET roommates
         if (req.url.startsWith('/roommates') && req.method == 'GET') {
             res.setHeader('Content-Type', 'application/json');
+            console.log(res.statusCode);
             res.end(fs.readFileSync('roommates.json', 'UTF8'));
         }
         //peticion: GET gastos
@@ -55,6 +57,7 @@ const server =
                     id: uuidv4().slice(-6)
                 }
                 gastosRoommate(gastos);
+                res.statusCode = 200;
                 res.end();                
             });
         }
@@ -81,6 +84,7 @@ const server =
                 });
                 fs.writeFileSync('gastos.json', JSON.stringify(gastosJSON));
                 gastosRoommates(gastosJSON);
+                res.statusCode = 200;
                 res.end();
             })
         }
@@ -88,6 +92,7 @@ const server =
         if (req.url.startsWith('/gasto') && req.method == 'DELETE') {
             const { id } = url.parse(req.url, true).query;
             deleteGasto(id);
+            res.statusCode = 200;
             res.end();
         }
     }).listen(8080, () => console.log('Server on => 8080'));
